@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern 속담 학습소</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8e97fd;
+            --bg-color: #f6f7fb;
+            --card-bg: #ffffff;
+            --text-main: #323232;
+            --text-sub: #a1a1a1;
+            --shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        body { 
+            font-family: 'Noto Sans KR', sans-serif; 
+            background-color: var(--bg-color); 
+            display: flex; justify-content: center; 
+            min-height: 100vh; margin: 0; padding: 20px; color: var(--text-main);
+        }
+        
+        .main-wrapper { width: 100%; max-width: 420px; }
+
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 10px; margin-bottom: 10px; }
+        .top-nav .user-info { font-size: 18px; font-weight: 700; }
+        .top-nav .icon-btn { width: 40px; height: 40px; background: white; border-radius: 12px; display: flex; justify-content: center; align-items: center; box-shadow: var(--shadow); }
+
+        .container { background: var(--card-bg); padding: 40px 25px; border-radius: 35px; box-shadow: var(--shadow); text-align: center; }
+
+        .level-card {
+            background-color: #ffffff; border-radius: 25px; padding: 25px; margin-bottom: 20px;
+            display: flex; flex-direction: column; align-items: flex-start;
+            cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+        .level-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
+        .level-card .icon-circle { width: 50px; height: 50px; border-radius: 15px; display: flex; justify-content: center; align-items: center; font-size: 24px; margin-bottom: 15px; }
+        .lv1-icon { background: #e8eaf6; color: #5c6bc0; }
+        .lv2-icon { background: #e8f5e9; color: #66bb6a; }
+        .lv3-icon { background: #fff3e0; color: #ffa726; }
+
+        .level-title { font-size: 17px; font-weight: 700; margin-bottom: 5px; }
+        .level-sub { font-size: 13px; color: var(--text-sub); }
+
+        .level-badge { font-size: 12px; font-weight: 700; color: var(--primary); background: rgba(142, 151, 253, 0.1); padding: 5px 15px; border-radius: 10px; margin-bottom: 20px; display: inline-block; }
+        .q-text { font-size: 22px; font-weight: 700; margin-bottom: 30px; line-height: 1.4; min-height: 62px; display: flex; align-items: center; justify-content: center; }
+        .desc-box { background-color: #fcfdfe; border-radius: 20px; padding: 25px; margin-bottom: 30px; text-align: left; border: 1px solid #f0f0f0; }
+        .desc-title { font-size: 12px; font-weight: 700; color: var(--text-sub); margin-bottom: 10px; display: block; letter-spacing: 1px; }
+        .desc-content { font-size: 16px; color: #555; line-height: 1.6; }
+        
+        input { font-size: 18px; padding: 18px; width: 85%; border: none; background: #f6f7fb; border-radius: 20px; text-align: center; outline: none; margin-bottom: 10px; }
+        .primary-btn { background-color: var(--primary); color: white; width: 100%; padding: 18px; border-radius: 20px; font-size: 16px; font-weight: 700; border: none; cursor: pointer; box-shadow: 0 10px 20px rgba(142, 151, 253, 0.2); margin-top: 10px; }
+        .home-btn { background: none; color: var(--text-sub); border: none; margin-top: 30px; font-size: 14px; cursor: pointer; }
+        #msg { font-size: 15px; margin-top: 15px; font-weight: 500; min-height: 22px; }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="top-nav">
+            <div class="user-info">Hi, Scholar 👋</div>
+            <div class="icon-btn">🔍</div>
+        </div>
+
+        <div class="container">
+            <div id="menu-screen">
+                <h2 style="text-align: left; margin-bottom: 5px;">속담 학습</h2>
+                <p style="text-align: left; color: var(--text-sub); font-size: 14px; margin-bottom: 30px;">초등학교 1학년 필수 속담 30개</p>
+                
+                <div class="level-card" onclick="startApp(1)">
+                    <div class="icon-circle lv1-icon">📚</div>
+                    <span class="level-title">1단계: 기본 공부</span>
+                    <span class="level-sub">전체 문장을 보며 익히기</span>
+                </div>
+                <div class="level-card" onclick="startApp(2)">
+                    <div class="icon-circle lv2-icon">✏️</div>
+                    <span class="level-title">2단계: 단어 퀴즈</span>
+                    <span class="level-sub">빈칸에 들어갈 단어 맞히기</span>
+                </div>
+                <div class="level-card" onclick="startApp(3)">
+                    <div class="icon-circle lv3-icon">💡</div>
+                    <span class="level-title">3단계: 심화 맞히기</span>
+                    <span class="level-sub">뜻풀이만 보고 속담 맞히기</span>
+                </div>
+            </div>
+
+            <div id="quiz-area" style="display:none;">
+                <div id="badge" class="level-badge">1단계</div>
+                <div class="q-text" id="question"></div>
+                <div class="desc-box">
+                    <span class="desc-title">MEANING</span>
+                    <span class="desc-content" id="description"></span>
+                </div>
+                <div id="input-section"><input type="text" id="ans" placeholder="정답을 입력하세요" autocomplete="off"></div>
+                <button id="btn-main" class="primary-btn" onclick="handleMainAction()">확인</button>
+                <p id="msg"></p>
+                <button class="home-btn" onclick="goHome()">메인 메뉴로 돌아가기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const allData = [
+            { q: "세 살 버릇 ( )까지 간다", a: "여든", full: "세 살 버릇 여든까지 간다", d: "어릴 때 나쁜 버릇을 들으면 할머니 할아버지가 될 때까지 고치기 힘들어요." },
+            { q: "원숭이도 ( )에서 떨어질 때가 있다", a: "나무", full: "원숭이도 나무에서 떨어질 때가 있다", d: "아무리 잘하는 사람도 가끔은 실수할 수 있다는 말이에요." },
+            { q: "가는 말이 고와야 ( ) 말이 곱다", a: "오는", full: "가는 말이 고와야 오는 말이 곱다", d: "내가 먼저 예쁘게 말해야 상대방도 나에게 예쁘게 말해줘요." },
+            { q: "고래 싸움에 ( ) 등 터진다", a: "새우", full: "고래 싸움에 새우 등 터진다", d: "강한 사람들끼리 싸우는 사이에 아무 상관 없는 약한 사람이 피해를 봐요." },
+            { q: "백지장도 ( ) 맞들면 낫다", a: "맞들면", full: "백지장도 맞들면 낫다", d: "아주 쉬운 일이라도 서로 힘을 합치면 훨씬 더 쉬워져요." },
+            { q: "티끌 모아 ( )", a: "태산", full: "티끌 모아 태산", d: "작은 것이라도 차곡차곡 모으면 나중에 아주 커진다는 뜻이에요." },
+            { q: "누워서 ( ) 먹기", a: "떡", full: "누워서 떡 먹기", d: "어떤 일이 아주아주 하기 쉽다는 말이에요." },
+            { q: "식은 ( ) 먹기", a: "죽", full: "식은 죽 먹기", d: "일이 매우 매우 쉽다는 뜻이에요." },
+            { q: "하늘의 ( ) 따기", a: "별", full: "하늘의 별 따기", d: "어떤 일이 이루어지기 너무너무 어렵다는 뜻이에요." },
+            { q: "땅 짚고 ( )치기", a: "헤엄", full: "땅 짚고 헤엄치기", d: "전혀 위험하지 않고 아주 쉬운 일을 말해요." },
+            { q: "쇠뿔도 단번에 ( )", a: "빼라", full: "쇠뿔도 단번에 빼라", d: "어떤 일을 하려고 마음먹었을 때 망설이지 말고 바로 하라는 뜻이에요." },
+            { q: "밑 빠진 독에 ( ) 붓기", a: "물", full: "밑 빠진 독에 물 붓기", d: "아무리 노력해도 보람이 없고 아무 소용이 없을 때 쓰는 말이에요." },
+            { q: "소 잃고 ( ) 고친다", a: "외양간", full: "소 잃고 외양간 고친다", d: "이미 일이 잘못된 뒤에야 뒤늦게 수습한다는 뜻이에요." },
+            { q: "개천에서 ( ) 난다", a: "용", full: "개천에서 용 난다", d: "어려운 환경에서도 훌륭한 사람이 나왔을 때 쓰는 말이에요." },
+            { q: "금강산도 ( )경", a: "식후", full: "금강산도 식후경", d: "아무리 좋은 구경이라도 배가 불러야 즐겁다는 뜻이에요." },
+            { q: "우물 안 ( )", a: "개구리", full: "우물 안 개구리", d: "세상 넓은 줄 모르고 자기 생각만 옳다고 믿는 사람을 말해요." },
+            { q: "바늘 도둑이 ( ) 도둑 된다", a: "소", full: "바늘 도둑이 소 도둑 된다", d: "작은 나쁜 짓도 자꾸 하면 나중에 아주 큰 나쁜 짓을 하게 돼요." },
+            { q: "돌다리도 ( ) 보고 건너라", a: "두드려", full: "돌다리도 두드려 보고 건너라", d: "아주 잘 아는 일이라도 조심해서 확인하고 해야 실수가 없어요." },
+            { q: "작은 고추가 ( )", a: "맵다", full: "작은 고추가 맵다", d: "몸집이 작아도 능력이 뛰어나거나 야무진 사람을 말해요." },
+            { q: "배보다 ( )이 더 크다", a: "배꼽", full: "배보다 배꼽이 더 크다", d: "원래 중요한 것보다 덧붙여진 것이 더 크거나 돈이 많이 들 때 써요." },
+            { q: "누워서 ( ) 뱉기", a: "침", full: "누워서 침 뱉기", d: "남을 해치려다가 결국 자기 자신에게 해로운 결과가 돌아와요." },
+            { q: "서당 개 삼 년이면 ( )을 읊는다", a: "풍월", full: "서당 개 삼 년이면 풍월을 읊는다", d: "어떤 곳에 오래 있으면 저절로 지식이나 지혜가 생긴다는 뜻이에요." },
+            { q: "하룻강아지 ( ) 무서운 줄 모른다", a: "범", full: "하룻강아지 범 무서운 줄 모른다", d: "철이 없어서 무서운 게 뭔지도 모르고 덤비는 사람을 말해요." },
+            { q: "등잔 밑이 ( )", a: "어둡다", full: "등잔 밑이 어둡다", d: "가까운 곳에서 일어난 일을 오히려 더 잘 모를 때 쓰는 말이에요." },
+            { q: "지렁이도 ( )하면 꿈틀한다", a: "디디면", full: "지렁이도 디디면 꿈틀한다", d: "아무리 순한 사람이라도 너무 괴롭히면 화를 낸다는 뜻이에요." },
+            { q: "호랑이도 제 말 하면 ( )", a: "온다", full: "호랑이도 제 말 하면 온다", d: "어떤 사람에 대해 이야기하고 있는데 마침 그 사람이 나타났을 때 써요." },
+            { q: "낮말은 ( )이 듣고 밤말은 쥐가 듣는다", a: "새", full: "낮말은 새가 듣고 밤말은 쥐가 듣는다", d: "아무도 안 듣는 것 같아도 늘 말조심을 해야 한다는 뜻이에요." },
+            { q: "천 리 길도 ( )부터", a: "한 걸음", full: "천 리 길도 한 걸음부터", d: "아무리 큰 일이라도 시작이 중요하다는 말이에요." },
+            { q: "공든 탑이 ( )", a: "무너지랴", full: "공든 탑이 무너지랴", d: "정성을 다해서 열심히 노력한 일은 쉽게 실패하지 않아요." },
+            { q: "입은 비뚤어져도 ( )은 바로 말해라", a: "말", full: "입은 비뚤어져도 말은 바로 말해라", d: "상황이 어렵더라도 항상 정직하고 바르게 말해야 한다는 뜻이에요." }
+        ];
+
+        let currentIdx = 0, currentLevel = 1, isCorrectState = false;
+
+        function startApp(level) {
+            currentLevel = level; currentIdx = 0; isCorrectState = false;
+            document.getElementById('menu-screen').style.display = 'none';
+            document.getElementById('quiz-area').style.display = 'block';
+            document.getElementById('badge').innerText = level + "단계 학습";
+            showQuestion();
+        }
+
+        function goHome() {
+            document.getElementById('menu-screen').style.display = 'block';
+            document.getElementById('quiz-area').style.display = 'none';
+        }
+
+        function showQuestion() {
+            const item = allData[currentIdx];
+            const qEl = document.getElementById('question');
+            const ansInput = document.getElementById('ans');
+            const mainBtn = document.getElementById('btn-main');
+            const msgEl = document.getElementById('msg');
+            
+            msgEl.innerText = ""; ansInput.value = ""; isCorrectState = false;
+            document.getElementById('description').innerText = item.d;
+
+            if (currentLevel === 1) {
+                qEl.innerText = item.full;
+                document.getElementById('input-section').style.display = 'none';
+                mainBtn.innerText = "다음 내용 👉";
+            } else {
+                qEl.innerText = currentLevel === 2 ? item.q : "이 속담은 무엇일까요? 🤔";
+                document.getElementById('input-section').style.display = 'block';
+                mainBtn.innerText = "정답 확인";
+                ansInput.focus();
+            }
+        }
+
+        function handleMainAction() {
+            if (currentLevel === 1 || isCorrectState) nextQuestion();
+            else checkAnswer();
+        }
+
+        function checkAnswer() {
+            const user = document.getElementById('ans').value.trim().replace(/ /g, '');
+            const item = allData[currentIdx];
+            const msgEl = document.getElementById('msg');
+            const mainBtn = document.getElementById('btn-main');
+            
+            let isCorrect = false;
+
+            if (currentLevel === 2) {
+                isCorrect = (user === item.a.replace(/ /g, ''));
+            } else if (currentLevel === 3) {
+                const correctFull = item.full.replace(/ /g, '');
+                const coreWord = item.a.replace(/ /g, '');
+                
+                // 유연한 정답 체크 로직 적용
+                if (user.length >= 2 && (correctFull.includes(user) || user.includes(coreWord) || user.includes(correctFull))) {
+                    isCorrect = true;
+                }
+            }
+
+            if(isCorrect) {
+                msgEl.innerText = "맞았어요! 정말 똑똑하네요! 🎉";
+                msgEl.style.color = "#4caf50";
+                isCorrectState = true;
+                mainBtn.innerText = "다음으로 넘어가기";
+                if(currentLevel === 3) document.getElementById('question').innerText = item.full;
+            } else {
+                msgEl.innerText = "조금 더 생각해보세요! 할 수 있어요! 💪";
+                msgEl.style.color = "#f44336";
+            }
+        }
+
+        function nextQuestion() {
+            currentIdx++;
+            if(currentIdx < allData.length) showQuestion();
+            else { alert("축하합니다! 30가지 속담을 모두 완료했어요! 🏆"); goHome(); }
+        }
+
+        document.getElementById('ans').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleMainAction();
+        });
+    </script>
+</body>
+</html>
